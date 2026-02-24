@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,142 +8,148 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<style>
-.tab-content{display:none;}
-.tab-content.active{display:block;}
-.nav-button.active{background:#0ea5e9;color:white;}
-</style>
 </head>
-
 <body class="bg-gray-100">
-<div class="max-w-6xl mx-auto p-6">
 
-<h1 class="text-3xl font-bold text-center mb-8">
-Medical Communication Training Platform
-</h1>
+<!-- HERO -->
+<section class="bg-blue-900 text-white text-center py-20">
+    <h1 class="text-4xl font-bold">Medical Communication Training</h1>
+    <p class="text-lg mt-2">Interactive Clinical Communication Course</p>
+</section>
 
-<!-- Navigation -->
-<div class="flex gap-3 justify-center mb-8">
-<button id="btn-principles" class="nav-button px-6 py-3 rounded-xl bg-sky-600 text-white"
-onclick="showTab('principles')">Principles</button>
+<!-- TRAINING FORM -->
+<section class="max-w-4xl mx-auto p-6 bg-white rounded-3xl shadow-lg mt-10">
 
-<button id="btn-simulation" class="nav-button px-6 py-3 rounded-xl bg-gray-200"
-onclick="showTab('simulation')">Simulation</button>
+    <h2 class="text-2xl font-bold text-center mb-6">Submit Your Training</h2>
 
-<button id="btn-quiz" class="nav-button px-6 py-3 rounded-xl bg-gray-200"
-onclick="showTab('quiz')">Final Assessment</button>
-</div>
+    <!-- Name -->
+    <div class="mb-4">
+        <label class="block font-bold mb-1">Full Name</label>
+        <input id="traineeName" type="text"
+            class="w-full border p-3 rounded-xl"
+            placeholder="Type your full name here...">
+    </div>
 
-<!-- Principles -->
-<div id="principles" class="tab-content active bg-white p-8 rounded-xl shadow">
-<h2 class="text-xl font-bold mb-4">Golden Rule</h2>
-<p>Patients remember how you made them feel — not the medical details.</p>
-</div>
+    <!-- Simulation -->
+    <div class="mb-6">
+        <label class="block font-bold mb-1">Simulation Response</label>
+        <textarea id="simulationAnswer" rows="4"
+            class="w-full border p-3 rounded-xl"
+            placeholder="Write your response here..."></textarea>
+    </div>
 
-<!-- Simulation -->
-<div id="simulation" class="tab-content bg-white p-8 rounded-xl shadow">
+    <!-- Submit Simulation -->
+    <button onclick="submitSimulation()"
+        class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold">
+        Submit Training Response
+    </button>
 
-<h2 class="text-xl font-bold mb-4">Clinical Simulation</h2>
+    <p id="simMessage" class="mt-3 text-green-600 font-bold"></p>
 
-<p class="mb-4">
-Patient says: "I'm afraid I might have cancer."
-</p>
+    <!-- QUIZ -->
+    <div class="mt-10">
+        <h3 class="text-xl font-bold mb-4 text-center">Final Assessment</h3>
 
-<textarea id="userAnswer"
-class="w-full border p-3 rounded-lg"
-rows="4"
-placeholder="Write your response..."></textarea>
+        <button onclick="submitQuiz('positive')"
+            class="w-full bg-gray-200 p-3 rounded-lg mb-3">
+            Start with positive news
+        </button>
 
-<button onclick="submitSimulation()"
-class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg">
-Submit Response
-</button>
+        <button onclick="submitQuiz('direct')"
+            class="w-full bg-gray-200 p-3 rounded-lg mb-3">
+            Be direct then allow silence
+        </button>
 
-<p id="simulationMessage" class="mt-4 font-bold text-green-600"></p>
+        <button onclick="submitQuiz('nurse')"
+            class="w-full bg-gray-200 p-3 rounded-lg mb-3">
+            Ask nurse to inform
+        </button>
 
-</div>
+        <p id="quizMessage" class="font-bold text-center text-red-600"></p>
+    </div>
 
-<!-- Quiz -->
-<div id="quiz" class="tab-content bg-white p-8 rounded-xl shadow">
+    <!-- CERTIFICATE -->
+    <div id="certificateSection" class="hidden text-center mt-10">
+        <button onclick="generateCertificate()"
+            class="bg-green-700 text-white px-8 py-3 rounded-xl font-bold">
+            🎓 Download Certificate
+        </button>
+    </div>
 
-<h2 class="text-xl font-bold mb-4">Final Assessment</h2>
-
-<p class="mb-4">
-When delivering death news, what is the correct approach?
-</p>
-
-<button onclick="submitQuiz('positive')"
-class="block w-full mb-3 p-3 bg-gray-200 rounded-lg">
-Start with positive news
-</button>
-
-<button onclick="submitQuiz('direct')"
-class="block w-full mb-3 p-3 bg-gray-200 rounded-lg">
-Be direct then allow silence
-</button>
-
-<button onclick="submitQuiz('nurse')"
-class="block w-full mb-3 p-3 bg-gray-200 rounded-lg">
-Ask the nurse to inform them
-</button>
-
-<p id="quizMessage" class="mt-4 font-bold text-green-600"></p>
-
-</div>
-
-</div>
+</section>
 
 <script>
 
-let quizSubmitted = false;
-let simulationSubmitted = false;
+// GOOGLE SHEET WEB APP URL
+const scriptURL = "https://script.google.com/macros/s/AKfycbzxd_UT0hEq1jVXG3KV9h_1MahWkq84REIOXJOEe6ygCOOqKJviwFmGg7dxmiOv1G7b/exec";
 
-function showTab(tabId){
-document.querySelectorAll('.tab-content')
-.forEach(t=>t.classList.remove("active"));
+let simAnswered = false;
+let quizAnswered = false;
 
-document.querySelectorAll('.nav-button')
-.forEach(b=>b.classList.remove("active"));
+// SUBMIT SIMULATION
+function submitSimulation() {
+    const name = document.getElementById("traineeName").value.trim();
+    const simText = document.getElementById("simulationAnswer").value.trim();
 
-document.getElementById(tabId).classList.add("active");
-document.getElementById("btn-"+tabId).classList.add("active");
+    if (!name || !simText) {
+        alert("Please fill in your name and simulation response.");
+        return;
+    }
+
+    simAnswered = true;
+    document.getElementById("simMessage").innerText = "Simulation saved.";
+
+    sendToSheet(name, simText, "");
 }
 
-// Simulation submission
-function submitSimulation(){
+// SUBMIT QUIZ
+function submitQuiz(choice) {
+    if (!simAnswered) {
+        alert("Please submit your training response first.");
+        return;
+    }
+    if (quizAnswered) return;
 
-if(simulationSubmitted) return;
+    quizAnswered = true;
 
-const answer = document.getElementById("userAnswer").value;
+    // If the correct answer is "direct"
+    if (choice === "direct") {
+        document.getElementById("quizMessage").innerText = "Correct! You can download your certificate.";
+        document.getElementById("certificateSection").classList.remove("hidden");
+    } else {
+        document.getElementById("quizMessage").innerText = "Your answer was submitted.";
+    }
 
-if(answer.trim() === ""){
-alert("Please write your response.");
-return;
+    const name = document.getElementById("traineeName").value.trim();
+    const simText = document.getElementById("simulationAnswer").value.trim();
+    sendToSheet(name, simText, choice);
 }
 
-simulationSubmitted = true;
-
-document.getElementById("simulationMessage")
-.innerText = "Your response has been submitted successfully.";
-
-document.getElementById("userAnswer").disabled = true;
+// SEND TO GOOGLE SHEET
+function sendToSheet(name, simulation, quiz) {
+    fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify({
+            name: name,
+            simulation: simulation,
+            quiz: quiz
+        })
+    });
 }
 
-// Quiz submission
-function submitQuiz(choice){
+// CERTIFICATE GENERATOR
+function generateCertificate() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF("landscape");
 
-if(quizSubmitted) return;
+    doc.setFontSize(28);
+    doc.text("Certificate of Completion", 150, 60, null, null, "center");
 
-quizSubmitted = true;
+    const name = document.getElementById("traineeName").value;
+    doc.setFontSize(22);
+    doc.text(name, 150, 90, null, null, "center");
 
-document.getElementById("quizMessage")
-.innerText = "Your answer has been submitted for review.";
-
-const buttons = document.querySelectorAll("#quiz button");
-buttons.forEach(btn => btn.disabled = true);
-
-console.log("Quiz Answer:", choice);
-
+    doc.save("Medical_Communication_Certificate.pdf");
 }
 
 </script>
