@@ -1,155 +1,190 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Medical Communication Training</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 </head>
-<body class="bg-gray-100">
 
-<!-- HERO -->
-<section class="bg-blue-900 text-white text-center py-20">
-    <h1 class="text-4xl font-bold">Medical Communication Training</h1>
-    <p class="text-lg mt-2">Interactive Clinical Communication Course</p>
-</section>
+<body class="bg-emerald-50 font-sans">
 
-<!-- TRAINING FORM -->
-<section class="max-w-4xl mx-auto p-6 bg-white rounded-3xl shadow-lg mt-10">
+<!-- HERO SECTION -->
+<section class="relative h-[400px] flex items-center justify-center text-white">
 
-    <h2 class="text-2xl font-bold text-center mb-6">Submit Your Training</h2>
+<img src="images/hospital.jpg" 
+class="absolute inset-0 w-full h-full object-cover">
 
-    <!-- Name -->
-    <div class="mb-4">
-        <label class="block font-bold mb-1">Full Name</label>
-        <input id="traineeName" type="text"
-            class="w-full border p-3 rounded-xl"
-            placeholder="Type your full name here...">
-    </div>
+<div class="absolute inset-0 bg-emerald-900/70"></div>
 
-    <!-- Simulation -->
-    <div class="mb-6">
-        <label class="block font-bold mb-1">Simulation Response</label>
-        <textarea id="simulationAnswer" rows="4"
-            class="w-full border p-3 rounded-xl"
-            placeholder="Write your response here..."></textarea>
-    </div>
-
-    <!-- Submit Simulation -->
-    <button onclick="submitSimulation()"
-        class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold">
-        Submit Training Response
-    </button>
-
-    <p id="simMessage" class="mt-3 text-green-600 font-bold"></p>
-
-    <!-- QUIZ -->
-    <div class="mt-10">
-        <h3 class="text-xl font-bold mb-4 text-center">Final Assessment</h3>
-
-        <button onclick="submitQuiz('positive')"
-            class="w-full bg-gray-200 p-3 rounded-lg mb-3">
-            Start with positive news
-        </button>
-
-        <button onclick="submitQuiz('direct')"
-            class="w-full bg-gray-200 p-3 rounded-lg mb-3">
-            Be direct then allow silence
-        </button>
-
-        <button onclick="submitQuiz('nurse')"
-            class="w-full bg-gray-200 p-3 rounded-lg mb-3">
-            Ask nurse to inform
-        </button>
-
-        <p id="quizMessage" class="font-bold text-center text-red-600"></p>
-    </div>
-
-    <!-- CERTIFICATE -->
-    <div id="certificateSection" class="hidden text-center mt-10">
-        <button onclick="generateCertificate()"
-            class="bg-green-700 text-white px-8 py-3 rounded-xl font-bold">
-            🎓 Download Certificate
-        </button>
-    </div>
+<div class="relative text-center z-10">
+<h1 class="text-4xl font-bold mb-3">
+برنامج التدريب على التواصل الطبي
+</h1>
+<p class="text-lg">
+Saudi German Hospital – Professional Training
+</p>
+</div>
 
 </section>
+
+<!-- CONTENT -->
+<div class="max-w-4xl mx-auto bg-white p-8 rounded-3xl shadow-xl -mt-16 relative z-20">
+
+<h2 class="text-2xl font-bold text-emerald-800 mb-6 text-center">
+ابدأ التدريب
+</h2>
+
+<!-- NAME -->
+<div class="mb-4">
+<label class="font-bold">الاسم الكامل</label>
+<input id="traineeName" type="text"
+class="w-full border p-3 rounded-xl mt-1">
+</div>
+
+<!-- SIMULATION -->
+<div class="mt-6 p-6 bg-emerald-50 rounded-2xl border border-emerald-200">
+<h3 class="text-xl font-bold text-emerald-800 mb-3">
+محاكاة تدريبية
+</h3>
+
+<p class="mb-3">
+مريضة تقول: "أنا خايفة يكون عندي سرطان"
+</p>
+
+<textarea id="simulationAnswer"
+class="w-full p-3 border rounded-xl"
+rows="4"></textarea>
+
+<button onclick="evaluateAnswer()"
+class="mt-4 bg-emerald-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-emerald-700">
+تقييم الرد
+</button>
+
+<div id="feedback" class="mt-4 font-bold text-lg"></div>
+</div>
+
+<!-- QUIZ -->
+<div class="mt-10 p-6 bg-green-50 rounded-2xl border border-green-200">
+<h3 class="text-xl font-bold text-green-900 mb-4">
+اختبار سريع
+</h3>
+
+<p class="mb-4">
+عند إبلاغ خبر وفاة، ما هو التصرف الصحيح؟
+</p>
+
+<button class="w-full mb-3 p-3 bg-white rounded-xl shadow"
+onclick="checkQuiz(false)">
+ابدأ بخبر إيجابي
+</button>
+
+<button class="w-full mb-3 p-3 bg-white rounded-xl shadow"
+onclick="checkQuiz(true)">
+كن مباشراً ثم اصمت
+</button>
+
+<button class="w-full mb-3 p-3 bg-white rounded-xl shadow"
+onclick="checkQuiz(false)">
+اطلب من التمريض إخبارهم
+</button>
+
+<div id="quiz-result" class="mt-4 font-bold"></div>
+</div>
+
+<!-- CERTIFICATE -->
+<div id="certificate-section"
+class="hidden text-center mt-10">
+
+<button onclick="generateCertificate()"
+class="bg-emerald-700 text-white px-8 py-4 rounded-2xl text-lg font-bold shadow-lg hover:bg-emerald-800">
+🎓 تحميل شهادة إتمام التدريب
+</button>
+
+</div>
+
+</div>
 
 <script>
 
-// GOOGLE SHEET WEB APP URL
 const scriptURL = "https://script.google.com/macros/s/AKfycbzxd_UT0hEq1jVXG3KV9h_1MahWkq84REIOXJOEe6ygCOOqKJviwFmGg7dxmiOv1G7b/exec";
 
-let simAnswered = false;
-let quizAnswered = false;
+let simulationText = "";
+let quizAnswer = "";
 
-// SUBMIT SIMULATION
-function submitSimulation() {
-    const name = document.getElementById("traineeName").value.trim();
-    const simText = document.getElementById("simulationAnswer").value.trim();
+function evaluateAnswer(){
 
-    if (!name || !simText) {
-        alert("Please fill in your name and simulation response.");
-        return;
-    }
+const answer = document.getElementById("simulationAnswer").value;
+const feedback = document.getElementById("feedback");
 
-    simAnswered = true;
-    document.getElementById("simMessage").innerText = "Simulation saved.";
+simulationText = answer;
 
-    sendToSheet(name, simText, "");
+if(answer.includes("أفهم") || answer.includes("قلق") || answer.includes("معك")){
+feedback.innerHTML = "✅ ممتاز — استخدمت التعاطف بشكل احترافي";
+feedback.style.color = "green";
+}else{
+feedback.innerHTML = "⚠️ حاول البدء بالتعاطف قبل إعطاء معلومات طبية";
+feedback.style.color = "red";
 }
 
-// SUBMIT QUIZ
-function submitQuiz(choice) {
-    if (!simAnswered) {
-        alert("Please submit your training response first.");
-        return;
-    }
-    if (quizAnswered) return;
-
-    quizAnswered = true;
-
-    // If the correct answer is "direct"
-    if (choice === "direct") {
-        document.getElementById("quizMessage").innerText = "Correct! You can download your certificate.";
-        document.getElementById("certificateSection").classList.remove("hidden");
-    } else {
-        document.getElementById("quizMessage").innerText = "Your answer was submitted.";
-    }
-
-    const name = document.getElementById("traineeName").value.trim();
-    const simText = document.getElementById("simulationAnswer").value.trim();
-    sendToSheet(name, simText, choice);
 }
 
-// SEND TO GOOGLE SHEET
-function sendToSheet(name, simulation, quiz) {
-    fetch(scriptURL, {
-        method: "POST",
-        body: JSON.stringify({
-            name: name,
-            simulation: simulation,
-            quiz: quiz
-        })
-    });
+function checkQuiz(correct){
+
+const result = document.getElementById("quiz-result");
+
+if(correct){
+result.innerHTML = "✔ إجابة صحيحة";
+result.style.color="green";
+quizAnswer = "correct";
+document.getElementById("certificate-section").classList.remove("hidden");
+}else{
+result.innerHTML = "✖ إجابة غير صحيحة";
+result.style.color="red";
+quizAnswer = "wrong";
 }
 
-// CERTIFICATE GENERATOR
-function generateCertificate() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF("landscape");
+saveToSheet();
 
-    doc.setFontSize(28);
-    doc.text("Certificate of Completion", 150, 60, null, null, "center");
+}
 
-    const name = document.getElementById("traineeName").value;
-    doc.setFontSize(22);
-    doc.text(name, 150, 90, null, null, "center");
+function saveToSheet(){
 
-    doc.save("Medical_Communication_Certificate.pdf");
+const name = document.getElementById("traineeName").value;
+
+fetch(scriptURL,{
+method:"POST",
+body:JSON.stringify({
+name:name,
+simulation:simulationText,
+quiz:quizAnswer
+})
+});
+
+}
+
+function generateCertificate(){
+
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF("landscape");
+
+doc.setFontSize(26);
+doc.text("Certificate of Completion",150,50,null,null,"center");
+
+doc.setFontSize(18);
+doc.text("Professional Medical Communication Training",150,70,null,null,"center");
+
+const name = document.getElementById("traineeName").value;
+
+doc.setFontSize(22);
+doc.text(name,150,110,null,null,"center");
+
+doc.save("Medical_Communication_Certificate.pdf");
+
 }
 
 </script>
