@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Medical Communication Training</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -13,82 +12,62 @@
 
 <body class="bg-emerald-50 font-sans">
 
-<!-- HERO SECTION -->
-<section class="relative h-[400px] flex items-center justify-center text-white">
+<!-- HEADER -->
+<header class="bg-emerald-800 text-white text-center py-6">
+<h1 class="text-3xl font-bold">برنامج التدريب على التواصل الطبي</h1>
+</header>
 
-<img src="images/hospital.jpg" 
-class="absolute inset-0 w-full h-full object-cover">
-
-<div class="absolute inset-0 bg-emerald-900/70"></div>
-
-<div class="relative text-center z-10">
-<h1 class="text-4xl font-bold mb-3">
-برنامج التدريب على التواصل الطبي
-</h1>
-<p class="text-lg">
-Saudi German Hospital – Professional Training
-</p>
+<!-- NAV BUTTONS -->
+<div class="flex justify-center gap-4 mt-6">
+<button onclick="showStep(1)" class="step-btn bg-emerald-600 text-white px-4 py-2 rounded-xl">الاسم</button>
+<button onclick="showStep(2)" class="step-btn bg-gray-300 px-4 py-2 rounded-xl">المحاكاة</button>
+<button onclick="showStep(3)" class="step-btn bg-gray-300 px-4 py-2 rounded-xl">الاختبار</button>
+<button onclick="showStep(4)" class="step-btn bg-gray-300 px-4 py-2 rounded-xl">الشهادة</button>
 </div>
-
-</section>
 
 <!-- CONTENT -->
-<div class="max-w-4xl mx-auto bg-white p-8 rounded-3xl shadow-xl -mt-16 relative z-20">
+<div class="max-w-3xl mx-auto mt-8 bg-white p-8 rounded-3xl shadow-xl">
 
-<h2 class="text-2xl font-bold text-emerald-800 mb-6 text-center">
-ابدأ التدريب
-</h2>
-
-<!-- NAME -->
-<div class="mb-4">
-<label class="font-bold">الاسم الكامل</label>
+<!-- STEP 1 -->
+<div id="step1" class="step">
+<h2 class="text-xl font-bold mb-4">إدخال الاسم</h2>
 <input id="traineeName" type="text"
-class="w-full border p-3 rounded-xl mt-1">
+class="w-full border p-3 rounded-xl"
+placeholder="اكتب اسمك الكامل هنا">
 </div>
 
-<!-- SIMULATION -->
-<div class="mt-6 p-6 bg-emerald-50 rounded-2xl border border-emerald-200">
-<h3 class="text-xl font-bold text-emerald-800 mb-3">
-محاكاة تدريبية
-</h3>
-
-<p class="mb-3">
-مريضة تقول: "أنا خايفة يكون عندي سرطان"
-</p>
+<!-- STEP 2 -->
+<div id="step2" class="step hidden">
+<h2 class="text-xl font-bold mb-4">المحاكاة التدريبية</h2>
+<p class="mb-3">مريضة تقول: "أنا خايفة يكون عندي سرطان"</p>
 
 <textarea id="simulationAnswer"
 class="w-full p-3 border rounded-xl"
 rows="4"></textarea>
 
 <button onclick="evaluateAnswer()"
-class="mt-4 bg-emerald-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-emerald-700">
+class="mt-4 bg-emerald-600 text-white px-6 py-2 rounded-xl">
 تقييم الرد
 </button>
 
-<div id="feedback" class="mt-4 font-bold text-lg"></div>
+<div id="feedback" class="mt-4 font-bold"></div>
 </div>
 
-<!-- QUIZ -->
-<div class="mt-10 p-6 bg-green-50 rounded-2xl border border-green-200">
-<h3 class="text-xl font-bold text-green-900 mb-4">
-اختبار سريع
-</h3>
+<!-- STEP 3 -->
+<div id="step3" class="step hidden">
+<h2 class="text-xl font-bold mb-4">الاختبار السريع</h2>
 
-<p class="mb-4">
-عند إبلاغ خبر وفاة، ما هو التصرف الصحيح؟
-</p>
-
-<button class="w-full mb-3 p-3 bg-white rounded-xl shadow"
+<button class="w-full mb-3 p-3 bg-gray-100 rounded-xl"
 onclick="checkQuiz(false)">
 ابدأ بخبر إيجابي
 </button>
 
-<button class="w-full mb-3 p-3 bg-white rounded-xl shadow"
+<button class="w-full mb-3 p-3 bg-gray-100 rounded-xl"
 onclick="checkQuiz(true)">
 كن مباشراً ثم اصمت
 </button>
 
-<button class="w-full mb-3 p-3 bg-white rounded-xl shadow"
+<button class="w-full mb-3 p-3 bg-gray-100 rounded-xl"
 onclick="checkQuiz(false)">
 اطلب من التمريض إخبارهم
 </button>
@@ -96,15 +75,14 @@ onclick="checkQuiz(false)">
 <div id="quiz-result" class="mt-4 font-bold"></div>
 </div>
 
-<!-- CERTIFICATE -->
-<div id="certificate-section"
-class="hidden text-center mt-10">
+<!-- STEP 4 -->
+<div id="step4" class="step hidden text-center">
+<h2 class="text-xl font-bold mb-4">الشهادة</h2>
 
 <button onclick="generateCertificate()"
-class="bg-emerald-700 text-white px-8 py-4 rounded-2xl text-lg font-bold shadow-lg hover:bg-emerald-800">
-🎓 تحميل شهادة إتمام التدريب
+class="bg-emerald-700 text-white px-8 py-3 rounded-xl">
+تحميل الشهادة
 </button>
-
 </div>
 
 </div>
@@ -113,24 +91,22 @@ class="bg-emerald-700 text-white px-8 py-4 rounded-2xl text-lg font-bold shadow-
 
 const scriptURL = "https://script.google.com/macros/s/AKfycbzxd_UT0hEq1jVXG3KV9h_1MahWkq84REIOXJOEe6ygCOOqKJviwFmGg7dxmiOv1G7b/exec";
 
-let simulationText = "";
-let quizAnswer = "";
+function showStep(stepNumber){
+document.querySelectorAll('.step').forEach(step => step.classList.add("hidden"));
+document.getElementById("step"+stepNumber).classList.remove("hidden");
+}
 
 function evaluateAnswer(){
-
 const answer = document.getElementById("simulationAnswer").value;
 const feedback = document.getElementById("feedback");
 
-simulationText = answer;
-
 if(answer.includes("أفهم") || answer.includes("قلق") || answer.includes("معك")){
-feedback.innerHTML = "✅ ممتاز — استخدمت التعاطف بشكل احترافي";
+feedback.innerHTML = "✅ ممتاز — استخدمت التعاطف";
 feedback.style.color = "green";
 }else{
-feedback.innerHTML = "⚠️ حاول البدء بالتعاطف قبل إعطاء معلومات طبية";
+feedback.innerHTML = "⚠️ حاول البدء بالتعاطف";
 feedback.style.color = "red";
 }
-
 }
 
 function checkQuiz(correct){
@@ -138,30 +114,28 @@ function checkQuiz(correct){
 const result = document.getElementById("quiz-result");
 
 if(correct){
-result.innerHTML = "✔ إجابة صحيحة";
+result.innerHTML = "✔ إجابة صحيحة — يمكنك الآن تحميل الشهادة";
 result.style.color="green";
-quizAnswer = "correct";
-document.getElementById("certificate-section").classList.remove("hidden");
+showStep(4);
 }else{
 result.innerHTML = "✖ إجابة غير صحيحة";
 result.style.color="red";
-quizAnswer = "wrong";
 }
 
 saveToSheet();
-
 }
 
 function saveToSheet(){
 
 const name = document.getElementById("traineeName").value;
+const simulation = document.getElementById("simulationAnswer").value;
 
 fetch(scriptURL,{
 method:"POST",
 body:JSON.stringify({
 name:name,
-simulation:simulationText,
-quiz:quizAnswer
+simulation:simulation,
+quiz:"submitted"
 })
 });
 
@@ -173,17 +147,14 @@ const { jsPDF } = window.jspdf;
 const doc = new jsPDF("landscape");
 
 doc.setFontSize(26);
-doc.text("Certificate of Completion",150,50,null,null,"center");
-
-doc.setFontSize(18);
-doc.text("Professional Medical Communication Training",150,70,null,null,"center");
+doc.text("Certificate of Completion",150,60,null,null,"center");
 
 const name = document.getElementById("traineeName").value;
 
 doc.setFontSize(22);
-doc.text(name,150,110,null,null,"center");
+doc.text(name,150,100,null,null,"center");
 
-doc.save("Medical_Communication_Certificate.pdf");
+doc.save("Certificate.pdf");
 
 }
 
