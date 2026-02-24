@@ -1,283 +1,151 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Medical Communication Training</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
 .tab-content{display:none;}
 .tab-content.active{display:block;}
 .nav-button.active{background:#0ea5e9;color:white;}
-.quiz-btn{
-display:block;
-width:100%;
-margin:10px 0;
-padding:12px;
-border-radius:14px;
-background:#e2e8f0;
-font-weight:bold;
-transition:0.3s;
-}
-.quiz-btn:hover{background:#cbd5e1;}
 </style>
 </head>
 
 <body class="bg-gray-100">
 <div class="max-w-6xl mx-auto p-6">
 
-<!-- Hero Section -->
-<div class="bg-gradient-to-l from-sky-700 to-sky-500 text-white rounded-3xl p-10 mb-10 shadow-xl">
-<div class="flex flex-col md:flex-row items-center justify-between gap-6">
-<div>
-<h2 class="text-4xl font-extrabold mb-4">
-برنامج التدريب على التواصل الطبي
-</h2>
-<p class="text-lg opacity-90">
-منصة تفاعلية لتطوير مهارات التواصل السريري للأطباء والطاقم الطبي
-</p>
-</div>
-<img src="https://images.unsplash.com/photo-1580281657527-47a6c7c2aef6"
-class="w-64 rounded-2xl shadow-lg">
-</div>
-</div>
-
-<!-- Progress -->
-<div class="bg-white p-6 rounded-2xl shadow-md mb-8">
-<div class="flex justify-between font-bold text-sky-800 mb-3">
-<span>مستوى التقدم</span>
-<span id="progress-text">25%</span>
-</div>
-<div class="w-full bg-gray-200 rounded-full h-4">
-<div id="progress-bar"
-class="bg-gradient-to-r from-sky-500 to-blue-700 h-4 rounded-full transition-all duration-700"
-style="width:25%">
-</div>
-</div>
-</div>
+<h1 class="text-3xl font-bold text-center mb-8">
+Medical Communication Training Platform
+</h1>
 
 <!-- Navigation -->
-<div class="flex gap-3 flex-wrap mb-8 justify-center">
-<button id="btn-principles"
-class="nav-button px-6 py-3 rounded-2xl font-bold shadow-md bg-sky-600 text-white"
-onclick="showTab('principles')">المبادئ</button>
+<div class="flex gap-3 justify-center mb-8">
+<button id="btn-principles" class="nav-button px-6 py-3 rounded-xl bg-sky-600 text-white"
+onclick="showTab('principles')">Principles</button>
 
-<button id="btn-bad-news"
-class="nav-button px-6 py-3 rounded-2xl font-bold shadow-md bg-gray-200"
-onclick="showTab('bad-news')">الأخبار السيئة</button>
+<button id="btn-simulation" class="nav-button px-6 py-3 rounded-xl bg-gray-200"
+onclick="showTab('simulation')">Simulation</button>
 
-<button id="btn-sensitive-q"
-class="nav-button px-6 py-3 rounded-2xl font-bold shadow-md bg-gray-200"
-onclick="showTab('sensitive-q')">الأسئلة الحساسة</button>
-
-<button id="btn-special-clinics"
-class="nav-button px-6 py-3 rounded-2xl font-bold shadow-md bg-gray-200"
-onclick="showTab('special-clinics')">العيادات الخاصة</button>
+<button id="btn-quiz" class="nav-button px-6 py-3 rounded-xl bg-gray-200"
+onclick="showTab('quiz')">Final Assessment</button>
 </div>
 
-<!-- TAB 1 -->
-<div id="principles" class="tab-content active bg-white p-8 rounded-3xl shadow-md">
+<!-- Principles -->
+<div id="principles" class="tab-content active bg-white p-8 rounded-xl shadow">
+<h2 class="text-xl font-bold mb-4">Golden Rule</h2>
+<p>Patients remember how you made them feel — not the medical details.</p>
+</div>
 
-<div class="mb-6 p-4 rounded-xl bg-amber-50 border border-amber-200">
-<h3 class="font-bold text-amber-800 mb-1">
-<i class="fa-solid fa-lightbulb"></i> النقطة الذهبية
-</h3>
-<p class="font-medium">
-المريض لا يتذكر التفاصيل الطبية… يتذكر كيف جعلته يشعر.
+<!-- Simulation -->
+<div id="simulation" class="tab-content bg-white p-8 rounded-xl shadow">
+
+<h2 class="text-xl font-bold mb-4">Clinical Simulation</h2>
+
+<p class="mb-4">
+Patient says: "I'm afraid I might have cancer."
 </p>
-</div>
-
-<p class="text-lg">ابدأ دائماً بالتعاطف قبل إعطاء المعلومة الطبية.</p>
-</div>
-
-<!-- TAB 2 -->
-<div id="bad-news" class="tab-content bg-white p-8 rounded-3xl shadow-md">
-
-<div class="mb-6 p-4 rounded-xl bg-amber-50 border border-amber-200">
-<h3 class="font-bold text-amber-800 mb-1">
-<i class="fa-solid fa-lightbulb"></i> النقطة الذهبية
-</h3>
-<p class="font-medium">
-عند إبلاغ خبر سيئ — كن واضحاً ثم اصمت.
-</p>
-</div>
-
-<p class="text-lg">استخدم جمل قصيرة ومباشرة وأعطِ مساحة للمشاعر.</p>
-</div>
-
-<!-- TAB 3 -->
-<div id="sensitive-q" class="tab-content bg-white p-8 rounded-3xl shadow-md">
-
-<div class="mb-6 p-4 rounded-xl bg-amber-50 border border-amber-200">
-<h3 class="font-bold text-amber-800 mb-1">
-<i class="fa-solid fa-lightbulb"></i> النقطة الذهبية
-</h3>
-<p class="font-medium">
-التعاطف أولاً… المعلومات ثانياً.
-</p>
-</div>
-
-<div class="mt-6 p-6 bg-blue-50 rounded-2xl border border-blue-200">
-<h3 class="text-xl font-bold mb-4">محاكاة تدريبية</h3>
-
-<p class="mb-4">مريضة تقول: "أنا خايفة يكون عندي سرطان"</p>
 
 <textarea id="userAnswer"
-class="w-full p-3 border rounded-xl"
+class="w-full border p-3 rounded-lg"
 rows="4"
-placeholder="اكتب ردك هنا..."></textarea>
+placeholder="Write your response..."></textarea>
 
-<button onclick="evaluateAnswer()"
-class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-blue-700">
-تقييم الرد
+<button onclick="submitSimulation()"
+class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg">
+Submit Response
 </button>
 
-<div id="feedback" class="mt-4 font-bold text-lg"></div>
-</div>
+<p id="simulationMessage" class="mt-4 font-bold text-green-600"></p>
+
 </div>
 
-<!-- TAB 4 -->
-<div id="special-clinics" class="tab-content bg-white p-8 rounded-3xl shadow-md">
+<!-- Quiz -->
+<div id="quiz" class="tab-content bg-white p-8 rounded-xl shadow">
 
-<div class="mb-6 p-4 rounded-xl bg-amber-50 border border-amber-200">
-<h3 class="font-bold text-amber-800 mb-1">
-<i class="fa-solid fa-lightbulb"></i> النقطة الذهبية
-</h3>
-<p class="font-medium">
-التواصل الجيد يقلل الشكاوى الطبية بنسبة كبيرة.
+<h2 class="text-xl font-bold mb-4">Final Assessment</h2>
+
+<p class="mb-4">
+When delivering death news, what is the correct approach?
 </p>
-</div>
 
-<div class="mt-6 p-6 bg-green-50 rounded-2xl border border-green-200">
-<h3 class="text-xl font-bold mb-4">اختبار نهائي</h3>
-
-<p>عند إبلاغ خبر وفاة، ما هو التصرف الصحيح؟</p>
-
-<button class="quiz-btn" onclick="checkQuiz(false)">ابدأ بخبر إيجابي</button>
-<button class="quiz-btn" onclick="checkQuiz(true)">كن مباشراً ثم اصمت</button>
-<button class="quiz-btn" onclick="checkQuiz(false)">اطلب من التمريض إخبارهم</button>
-
-<div id="quiz-result" class="mt-4 font-bold"></div>
-</div>
-</div>
-
-<!-- Certificate -->
-<div id="certificate-section" class="hidden text-center mt-12">
-<button onclick="openCertificateModal()"
-class="bg-emerald-600 text-white px-10 py-4 rounded-2xl text-lg font-bold shadow-lg hover:bg-emerald-700 transition">
-🎓 احصل على شهادة إتمام التدريب
-</button>
-</div>
-
-<!-- Modal -->
-<div id="certificate-modal"
-class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50">
-
-<div class="bg-white p-8 rounded-2xl shadow-xl text-center w-[90%] max-w-md">
-
-<h3 class="text-2xl font-bold mb-4">إصدار الشهادة</h3>
-
-<input id="traineeName"
-type="text"
-placeholder="اكتب اسمك هنا"
-class="w-full border p-3 rounded-xl mb-4 text-center font-bold">
-
-<button onclick="generateCertificate()"
-class="bg-sky-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-sky-700">
-تحميل الشهادة
+<button onclick="submitQuiz('positive')"
+class="block w-full mb-3 p-3 bg-gray-200 rounded-lg">
+Start with positive news
 </button>
 
-<div class="mt-4">
-<button onclick="closeCertificateModal()"
-class="text-gray-500 underline">إغلاق</button>
-</div>
+<button onclick="submitQuiz('direct')"
+class="block w-full mb-3 p-3 bg-gray-200 rounded-lg">
+Be direct then allow silence
+</button>
+
+<button onclick="submitQuiz('nurse')"
+class="block w-full mb-3 p-3 bg-gray-200 rounded-lg">
+Ask the nurse to inform them
+</button>
+
+<p id="quizMessage" class="mt-4 font-bold text-green-600"></p>
 
 </div>
-</div>
-
-<footer class="mt-16 text-center text-gray-500 text-sm">
-<hr class="mb-4">
-<p>© 2025 Medical Communication Training</p>
-<p>Developed by Your Name</p>
-</footer>
 
 </div>
 
 <script>
-const { jsPDF } = window.jspdf;
+
+let quizSubmitted = false;
+let simulationSubmitted = false;
 
 function showTab(tabId){
-localStorage.setItem("lastTab", tabId);
-document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove("active"));
-document.querySelectorAll('.nav-button').forEach(b=>b.classList.remove("active"));
+document.querySelectorAll('.tab-content')
+.forEach(t=>t.classList.remove("active"));
+
+document.querySelectorAll('.nav-button')
+.forEach(b=>b.classList.remove("active"));
+
 document.getElementById(tabId).classList.add("active");
 document.getElementById("btn-"+tabId).classList.add("active");
-updateProgress(tabId);
 }
 
-window.onload=function(){
-const saved=localStorage.getItem("lastTab")||"principles";
-showTab(saved);
+// Simulation submission
+function submitSimulation(){
+
+if(simulationSubmitted) return;
+
+const answer = document.getElementById("userAnswer").value;
+
+if(answer.trim() === ""){
+alert("Please write your response.");
+return;
 }
 
-function updateProgress(tabId){
-let percent=25;
-if(tabId==="bad-news")percent=50;
-if(tabId==="sensitive-q")percent=75;
-if(tabId==="special-clinics")percent=100;
-document.getElementById("progress-bar").style.width=percent+"%";
-document.getElementById("progress-text").innerText=percent+"%";
+simulationSubmitted = true;
+
+document.getElementById("simulationMessage")
+.innerText = "Your response has been submitted successfully.";
+
+document.getElementById("userAnswer").disabled = true;
 }
 
-function evaluateAnswer(){
-const answer=document.getElementById("userAnswer").value;
-const feedback=document.getElementById("feedback");
-if(answer.includes("أفهم")||answer.includes("قلق")||answer.includes("معك")){
-feedback.innerHTML="✅ رد ممتاز — استخدمت التعاطف";
-feedback.style.color="green";
-}else{
-feedback.innerHTML="⚠️ حاول البدء بالتعاطف أولاً";
-feedback.style.color="red";
-}
+// Quiz submission
+function submitQuiz(choice){
+
+if(quizSubmitted) return;
+
+quizSubmitted = true;
+
+document.getElementById("quizMessage")
+.innerText = "Your answer has been submitted for review.";
+
+const buttons = document.querySelectorAll("#quiz button");
+buttons.forEach(btn => btn.disabled = true);
+
+console.log("Quiz Answer:", choice);
+
 }
 
-function checkQuiz(correct){
-const result=document.getElementById("quiz-result");
-if(correct){
-result.innerHTML="✔ إجابة صحيحة — يمكنك الآن الحصول على الشهادة";
-result.style.color="green";
-document.getElementById("certificate-section").classList.remove("hidden");
-}else{
-result.innerHTML="✖ غير صحيح — حاول مرة أخرى";
-result.style.color="red";
-}
-}
-
-function openCertificateModal(){
-document.getElementById("certificate-modal").classList.remove("hidden");
-document.getElementById("certificate-modal").classList.add("flex");
-}
-
-function closeCertificateModal(){
-document.getElementById("certificate-modal").classList.add("hidden");
-}
-
-function generateCertificate(){
-const name=document.getElementById("traineeName").value;
-if(!name){alert("يرجى كتابة الاسم");return;}
-const doc=new jsPDF("landscape");
-doc.setFontSize(28);
-doc.text("Certificate of Completion",150,40,null,null,"center");
-doc.setFontSize(18);
-doc.text("Professional Medical Communication Training",150,65,null,null,"center");
-doc.setFontSize(22);
-doc.text(name,150,100,null,null,"center");
-doc.save("Medical_Certificate.pdf");
-}
 </script>
 
 </body>
